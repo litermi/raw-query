@@ -32,7 +32,7 @@
                 "Litermi\\RawQuery\\Providers\\ServiceProvider"
             ],
             "aliases": {
-                "RawQuery": "Litermi\\RawQuery\\Facades\\RawQueryFacade"
+                "RawQuery": "Litermi\\RawQuery\\Facades\\RawQuery"
             }
         }
     },

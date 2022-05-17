@@ -52,25 +52,6 @@ class RawQueryService
         return $result;
     }
 
-    /**
-     * @param $value
-     * @return mixed[]
-     */
-    private function getValues($value): array
-    {
-        $values = collect($value);
-
-        $values = $values->map($this->mapChangeObjectToArrayTransformStatic());
-
-        return $values->toArray();
-    }
-
-    public function mapChangeObjectToArrayTransformStatic(): callable
-    {
-        return function ($item, $key) {
-            return (array)$item;
-        };
-    }
 
     /**
      * @param string $value
@@ -91,5 +72,25 @@ class RawQueryService
         $values = collect($value)->first();
         $values = collect($values);
         return $values->toArray();
+    }
+
+    /**
+     * @param $value
+     * @return mixed[]
+     */
+    private function getValues($value): array
+    {
+        $values = collect($value);
+
+        $values = $values->map($this->mapChangeObjectToArrayTransformStatic());
+
+        return $values->toArray();
+    }
+
+    private function mapChangeObjectToArrayTransformStatic(): callable
+    {
+        return function ($item, $key) {
+            return (array)$item;
+        };
     }
 }

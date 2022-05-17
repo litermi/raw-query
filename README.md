@@ -41,7 +41,7 @@ php artisan vendor:publish --provider="Litermi\RawQuery\Providers\ServiceProvide
 
 ```php
 
-use Litermi\RawQuery\Facades\RawQueryFacade;
+use Litermi\RawQuery\Facades\RawQuery;
 
 
 $product = RawQuery::to('mysql')->getRow("select * from products where id_product=".$idProduct);
