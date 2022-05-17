@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 /**
  *
  */
-class RawQueryService
+class RawQuery
 {
 
     /**
