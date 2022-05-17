@@ -2,7 +2,7 @@
 
 namespace Litermi\RawQuery\Providers;
 
-use Litermi\RawQuery\Services\RawQuery;
+use Litermi\RawQuery\Services\RawQueryService;
 
 /**
  *
@@ -11,12 +11,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
+        $this->app->bind('raw-query-service', function()
+        {
+            return new RawQueryService();
+        });
+
         $this->mergeConfig();
 
-        $this->app->bind('raw-query', function()
-        {
-            return new RawQuery();
-        });
     }
 
     public function boot()

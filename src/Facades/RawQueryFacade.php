@@ -11,6 +11,6 @@ class RawQueryFacade extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'raw-query';
+        return 'raw-query-service';
     }
 }
