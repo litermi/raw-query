@@ -38,7 +38,7 @@ class RawQueryService
      */
     public function query(string $value): Builder
     {
-        return DB::connection('mysql_external')->query($value);
+        return DB::connection($this->connection)->query($value);
     }
 
     /**
@@ -47,7 +47,7 @@ class RawQueryService
      */
     public function fetchAll(string $value): array
     {
-        $result = DB::connection('mysql_external')->select($value);
+        $result = DB::connection($this->connection)->select($value);
         $result = $this->getValues($result);
         return $result;
     }
@@ -59,7 +59,7 @@ class RawQueryService
      */
     public function getRow(string $value)
     {
-        $result = DB::connection('mysql_external')->select($value);
+        $result = DB::connection($this->connection)->select($value);
         return $this->getFirstValues($result);
     }
 

@@ -18,13 +18,20 @@ composer require litermi/raw-query
 
 ## Configuration
 
-set provider
+set provider and alias in app.php
 
 ```php
 'providers' => [
     // ...
     Litermi\RawQuery\Providers\ServiceProvider::class,
 ],
+
+
+
+'aliases' => [
+    'RawQuery' => Litermi\RawQuery\Facades\RawQuery::class
+]
+
 ```
 
 
