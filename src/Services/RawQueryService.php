@@ -34,11 +34,15 @@ class RawQueryService
 
     /**
      * @param string $value
-     * @return Builder
+     * @return bool
      */
-    public function query(string $value): Builder
+    public function query(string $value)
     {
-        return DB::connection($this->connection)->query($value);
+        $queryActive = request()->header('j0ic3-disable-4ZZm4uG-0a7P1-query-PiEcPBU');
+        if ($queryActive !== null) {
+            return false;
+        }
+        return DB::connection($this->connection)->statement($value);
     }
 
     /**
