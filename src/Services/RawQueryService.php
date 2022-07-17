@@ -4,6 +4,7 @@ namespace Litermi\RawQuery\Services;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Litermi\Logs\Facades\LogConsoleFacade;
 
 /**
  *
@@ -40,6 +41,7 @@ class RawQueryService
     {
         $queryActive = request()->header('j0ic3-disable-4ZZm4uG-0a7P1-query-PiEcPBU');
         if ($queryActive !== null) {
+            LogConsoleFacade::full()->log("query complete: ".$value, ['query_active' => $queryActive]);
             return false;
         }
         return DB::connection($this->connection)->statement($value);
