@@ -4,6 +4,7 @@ namespace Litermi\RawQuery\Services;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Litermi\Cache\Models\ModelCacheConst;
 use Litermi\Logs\Facades\LogConsoleFacade;
 
 /**
@@ -39,7 +40,7 @@ class RawQueryService
      */
     public function query(string $value)
     {
-        $queryActive = request()->header('j0ic3-disable-4ZZm4uG-0a7P1-query-PiEcPBU');
+        $queryActive = request()->header(ModelCacheConst::HEADER_ACTIVE_RECORD);
         if ($queryActive !== null) {
             LogConsoleFacade::full()->log("query complete: ".$value, ['query_active' => $queryActive]);
             return false;

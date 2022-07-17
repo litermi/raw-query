@@ -16,6 +16,7 @@
         "illuminate/config": "^7.20|^8.19|^9.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
         "litermi/logs": "^1.0",
+        "litermi/cache-query-builder": "^1.0",
         "litermi/error-notification": "^1.0"
     },
     "autoload": {
