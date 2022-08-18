@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static self to(string $connection)
- * @method static void query(string $value)
- * @method static void fetchAll(string $value)
- * @method static void getRow(string $value)
+ * @method static bool query(string $value)
+ * @method static array fetchAll(string $value)
+ * @method static array getRow(string $value)
  *
  */
 class RawQuery extends Facade

@@ -4,6 +4,7 @@ namespace Litermi\RawQuery\Services;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Litermi\Cache\Models\ModelCacheConst;
 use Litermi\Logs\Facades\LogConsoleFacade;
 
@@ -38,10 +39,11 @@ class RawQueryService
      * @param string $value
      * @return bool
      */
-    public function query(string $value)
+    public function query(string $value): bool
     {
         $queryActive = request()->header(ModelCacheConst::HEADER_ACTIVE_RECORD);
         if ($queryActive !== null) {
+            $value = Str::replace(array("\r", "\n"), "", $value);
             LogConsoleFacade::full()->log("query complete: ".$value, ['query_active' => $queryActive]);
             return false;
         }
@@ -64,7 +66,7 @@ class RawQueryService
      * @param string $value
      * @return mixed[]
      */
-    public function getRow(string $value)
+    public function getRow(string $value): array
     {
         $result = DB::connection($this->connection)->select($value);
         return $this->getFirstValues($result);
@@ -74,7 +76,7 @@ class RawQueryService
      * @param $value
      * @return mixed[]
      */
-    private function getFirstValues($value)
+    private function getFirstValues($value): array
     {
         $values = collect($value)->first();
         $values = collect($values);
