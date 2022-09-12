@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool query(string $value)
  * @method static array fetchAll(string $value)
  * @method static array getRow(string $value)
+ * @method static mixed getOne(string $value)
  *
  */
 class RawQuery extends Facade

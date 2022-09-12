@@ -72,6 +72,13 @@ class RawQueryService
         return $this->getFirstValues($result);
     }
 
+    public function getOne(string $value)
+    {
+        $result = DB::connection($this->connection)->select($value);
+        $valuesResult = $this->getFirstValues($result);
+        return array_key_exists(0, $valuesResult) ? $valuesResult[0] : null;
+    }
+
     /**
      * @param $value
      * @return mixed[]
