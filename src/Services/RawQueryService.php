@@ -76,7 +76,11 @@ class RawQueryService
     {
         $result = DB::connection($this->connection)->select($value);
         $valuesResult = $this->getFirstValues($result);
-        return array_key_exists(0, $valuesResult) ? $valuesResult[0] : null;
+        if(is_array($valuesResult) === false){
+            return null;
+        }
+        $valuesResult = collect($valuesResult);
+        return $valuesResult->count() !== 0 ? $valuesResult->first() : null;
     }
 
     /**
