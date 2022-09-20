@@ -40,7 +40,7 @@ class RawQueryService
      */
     public function query(string $value): bool
     {
-        $value = Str::replace(array("\r", "\n"), "", $value);
+        $value = $this->replaceJumpLineAndEmptyLine($value);
         $queryActive = request()->header(ModelCacheConst::HEADER_ACTIVE_RECORD);
         if ($queryActive !== null) {
             LogConsoleFacade::full()->log("query complete: ".$value, ['query_active' => $queryActive]);
@@ -55,7 +55,7 @@ class RawQueryService
      */
     public function fetchAll(string $value): array
     {
-        $value = Str::replace(array("\r", "\n"), "", $value);
+        $value = $this->replaceJumpLineAndEmptyLine($value);
         $result = DB::connection($this->connection)->select($value);
         $result = $this->getValues($result);
         return $result;
@@ -68,14 +68,14 @@ class RawQueryService
      */
     public function getRow(string $value): array
     {
-        $value = Str::replace(array("\r", "\n"), "", $value);
+        $value = $this->replaceJumpLineAndEmptyLine($value);
         $result = DB::connection($this->connection)->select($value);
         return $this->getFirstValues($result);
     }
 
     public function getOne(string $value)
     {
-        $value = Str::replace(array("\r", "\n"), "", $value);
+        $value = $this->replaceJumpLineAndEmptyLine($value);
         $result = DB::connection($this->connection)->select($value);
         $valuesResult = $this->getFirstValues($result);
         if(is_array($valuesResult) === false){
@@ -114,5 +114,14 @@ class RawQueryService
         return function ($item, $key) {
             return (array)$item;
         };
+    }
+
+    /**
+     * @param $value
+     * @return array|string|string[]|null
+     */
+    private function replaceJumpLineAndEmptyLine($value){
+        $value = Str::replace(array("\r", "\n"), "", $value);
+        return preg_replace('!\s+!', ' ', $value);
     }
 }
