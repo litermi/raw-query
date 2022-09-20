@@ -2,7 +2,6 @@
 
 namespace Litermi\RawQuery\Services;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Litermi\Cache\Models\ModelCacheConst;
@@ -41,9 +40,9 @@ class RawQueryService
      */
     public function query(string $value): bool
     {
+        $value = Str::replace(array("\r", "\n"), "", $value);
         $queryActive = request()->header(ModelCacheConst::HEADER_ACTIVE_RECORD);
         if ($queryActive !== null) {
-            $value = Str::replace(array("\r", "\n"), "", $value);
             LogConsoleFacade::full()->log("query complete: ".$value, ['query_active' => $queryActive]);
             return false;
         }
@@ -56,6 +55,7 @@ class RawQueryService
      */
     public function fetchAll(string $value): array
     {
+        $value = Str::replace(array("\r", "\n"), "", $value);
         $result = DB::connection($this->connection)->select($value);
         $result = $this->getValues($result);
         return $result;
@@ -68,12 +68,14 @@ class RawQueryService
      */
     public function getRow(string $value): array
     {
+        $value = Str::replace(array("\r", "\n"), "", $value);
         $result = DB::connection($this->connection)->select($value);
         return $this->getFirstValues($result);
     }
 
     public function getOne(string $value)
     {
+        $value = Str::replace(array("\r", "\n"), "", $value);
         $result = DB::connection($this->connection)->select($value);
         $valuesResult = $this->getFirstValues($result);
         if(is_array($valuesResult) === false){
