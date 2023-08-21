@@ -36,10 +36,14 @@ class RawQueryService
 
     /**
      * @param string $value
-     * @return bool
+     * @return mixed
      */
-    public function query(string $value): bool
+    public function query(string $value): mixed
     {
+        if(Str::contains(Str::lower($value),'select')   && Str::contains(Str::lower($value),'from')){
+           return $this->fetchAll($value);
+        }
+
         $value = $this->replaceJumpLineAndEmptyLine($value);
         $queryActive = request()->header(ModelCacheConst::HEADER_ACTIVE_RECORD);
         if ($queryActive !== null) {
